@@ -2,8 +2,6 @@ const socket = io();
 
 socket.emit('serverAdmin', 'df');
 socket.on('admin', (site) => {
-    socket.on('result', (text) => alert(text));
-    // console.log(site);
     const adminInfoTemplate = document.querySelector('#adminInfoTemplate').innerHTML;
     const htmlInfo = Mustache.render(adminInfoTemplate, site.site);
     document.querySelector('.forms').insertAdjacentHTML('afterbegin', htmlInfo);
@@ -13,7 +11,7 @@ socket.on('admin', (site) => {
     document.querySelector('.forms').insertAdjacentHTML('beforeend', htmlProject);
 
     site.projects.forEach((project) => {
-        // console.log(project)
+        console.log(project)
         const id = project._id.toString();
         const adminProjectUpdateTemplate = document.querySelector('#adminProjectUpdateTemplate').innerHTML;
         const htmlUpdateProject = Mustache.render(adminProjectUpdateTemplate, {...project, id});
@@ -41,7 +39,7 @@ socket.on('admin', (site) => {
 
 
         socket.emit('updateSite', {name, position, photo: { name: photo.name, image: photo}, info, list, contact, id: site.site._id });
-        
+        socket.on('result', (site) => console.log(site));
     });
 
     document.querySelector('#project').addEventListener('submit', (e) => {
@@ -50,13 +48,14 @@ socket.on('admin', (site) => {
         const info = document.querySelector('.project__info').value;
         let media = [];
 
-        // console.log(e.target.lastElementChild.previousElementSibling)
+        console.log(e.target.lastElementChild.previousElementSibling)
         document.querySelectorAll('.project__video-block').forEach((block) => {
             if(block.firstElementChild.files[0].type.includes('image')) media.push({ data: block.firstElementChild.files[0], type: 'image'});
             else if(block.firstElementChild.files[0].type.includes('video')) media.push({ data: block.firstElementChild.files[0], type: 'video'});
         });
 
         socket.emit('addNewProject', {title, info, media });
+        socket.on('result', (data) => console.log(data));
     });
 
 
@@ -68,15 +67,9 @@ socket.on('admin', (site) => {
             if(project.id === id){
                 //  project.addEventListener('submit', )
                 // console.log('gik')
-                project.firstElementChild.addEventListener('click', (e) => {
-                    if(confirm('Are you sure you wat to delite project ' + project.title)) {
-                        socket.emit('deleteProject', id);
-                        project.style.display = 'none';
-                    }
-                });
                 project.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    const title = e.target.lastElementChild.previousElementSibling.previousElementSibling.previousElementSibling.value;
+                    const title = e.target.firstElementChild.nextElementSibling.value;
                     const info = e.target.firstElementChild.nextElementSibling.nextElementSibling.value;
                     let media = [];
 
@@ -152,7 +145,7 @@ document.querySelectorAll('.project__video').forEach((elem) => {
             
             // console.log('click', e.target.parentElement, e.target.parentElement.previousElementSibling.files[0]);
             const plus = e.target.parentElement;
-            // console.log(plus.parentElement.firstElementChild, plus.parentElement.parentElement.parentElement.lastElementChild.previousElementSibling.firstElementChild.nextElementSibling.firstElementChild);
+            console.log(plus.parentElement.firstElementChild, plus.parentElement.parentElement.parentElement.lastElementChild.previousElementSibling.firstElementChild.nextElementSibling.firstElementChild);
             // console.log(plus.parentElement.parentElement.parentElement.lastElementChild.previousElementSibling.lastElementChild.firstElementChild);
             // console.log(plus.previousElementSibling.files[0], plus.parentElement.parentElement.lastElementChild.firstElementChild.files[0])
             if(plus.previousElementSibling.files[0] && plus.parentElement.parentElement.lastElementChild.firstElementChild.files[0]) {
