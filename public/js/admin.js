@@ -155,12 +155,18 @@ document.querySelectorAll('.project__video').forEach((elem) => {
             // console.log(plus.parentElement.firstElementChild, plus.parentElement.parentElement.parentElement.lastElementChild.previousElementSibling.firstElementChild.nextElementSibling.firstElementChild);
             // console.log(plus.parentElement.parentElement.parentElement.lastElementChild.previousElementSibling.lastElementChild.firstElementChild);
             // console.log(plus.previousElementSibling.files[0], plus.parentElement.parentElement.lastElementChild.firstElementChild.files[0])
-            if(plus.previousElementSibling.files[0] && plus.parentElement.parentElement.lastElementChild.firstElementChild.files[0]) {
+            // console.log(plus.parentElement.parentElement.parentElement.id,'product')
+            if(plus.previousElementSibling.files[0] && plus.parentElement.parentElement.lastElementChild.firstElementChild.files[0] && plus.parentElement.parentElement.parentElement.id === 'project'){
                 plus.parentElement.parentElement.insertAdjacentHTML('beforeend', `<div class="project__video-block">
-                <input class="project__video" id="video__video"  type="file" name="video" placeholder="Media" accept="image/*" required>
+                <input class="project__video" id="video__video"  type="file" name="video" placeholder="Video" accept="image/*, video/*" required>
                 <div class="project__plus"><i class="fas fa-plus"></i></div>
-            </div>`)
-            };
+            </div>`);
+            }else if(plus.previousElementSibling.files[0] && plus.parentElement.parentElement.lastElementChild.firstElementChild.files[0]) {
+                plus.parentElement.parentElement.insertAdjacentHTML('beforeend', `<div class="project__media-block project__media-block-${plus.parentElement.parentElement.parentElement.id}">
+                <input class="project__video" id="video__video"  type="file" name="video" placeholder="Media" accept="image/*, video/*" required>
+                <div class="project__plus"><i class="fas fa-plus"></i></div>
+            </div>`);
+            } ;
             if(!plus.previousElementSibling.files[0] && plus.parentElement.firstElementChild != plus.parentElement.parentElement.parentElement.lastElementChild.previousElementSibling.firstElementChild.nextElementSibling.firstElementChild) {
                 plus.parentElement.parentNode.removeChild(plus.parentElement);
             }

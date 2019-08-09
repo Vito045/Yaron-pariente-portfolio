@@ -46,6 +46,10 @@ body {
     background-color: #374148;
 }
 
+html,body {
+    overflow-x: hidden;
+}
+
 .container {
     display: grid;
     // grid-template-rows: 80vh min-content 40vw repeat(3, min-content) 700px;
