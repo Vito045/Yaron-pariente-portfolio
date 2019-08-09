@@ -7,20 +7,15 @@ const validator = require('validator');
 const soketio = require('socket.io');
 const { generateMessage, generateLocationMessage } = require('./utils/messages');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users');
-const SiteText = require('./models/siteText');
+const User = require('./models/user');
 const Site = require('./models/site');
 const Project = require('./models/project');
-const ProjectText = require('./models/projectText');
 const userRouter = require('./routes/user');
 const _ = require('lodash');
 const mongodb = require('mongodb');
 const { ObjectID } = mongodb;
-// const upload = require('express-fileupload');
-// const im = require('imagemagick');
-// const sharp = require('sharp');
-// const imageCompression = require('browser-image-compression');
+const upload = require('express-fileupload');
 // app.use(userRouter);
-// var Jimp = require('jimp');
 
 const port = process.env.PORT;
 
@@ -41,7 +36,7 @@ hbs.registerPartials(partialsPath);
 // //  Setup sattic directory to serve
 app.use(express.static(publicDirectoryPath));
 
-// app.use(upload());
+app.use(upload());
 
 // app.get('/', (req, res) => {
 //     res.render('index');
@@ -54,7 +49,6 @@ app.use(express.static(publicDirectoryPath));
 // app.get('/admin', (req, res) => {
 //     res.render('admin');
 // });
-
 
 app.get('/admin', (req, res) => {
     res.sendFile(__dirname + '/admin.html')
@@ -74,22 +68,15 @@ io.on('connection', async (socket) => {
     console.log('New WebSocket connection');
 
     socket.on('serverAdmin', async () => {
-        // const currentState = await Site.findOne().sort({created_at: -1}); 
-        // socket.emit('start', { site: currentState });  
-        // const projects = await Project.find();
-        // socket.emit('projects', projects );
-        const currentTextState = await SiteText.findOne().sort({created_at: -1}); 
-        // socket.emit('start', { site: currentTextState });  
-        const projectsText = await ProjectText.find();
-        // console.log(projectsText)
-        // socket.emit('projects', projects );
-        socket.emit('admin', { site: currentTextState, projects: projectsText });
+        const currentState = await Site.findOne().sort({created_at: -1}); 
+        socket.emit('start', { site: currentState });  
+        const projects = await Project.find();
+        socket.emit('projects', projects );
+        socket.emit('admin', { site: currentState, projects });
     });
 
     
     socket.on('serverPortfolio', async () => {
-        // const currentState = await Site.findOne().sort({created_at: -1}); 
-        // socket.emit('start', { site: currentState });  
         const currentState = await Site.findOne().sort({created_at: -1}); 
         socket.emit('start', { site: currentState });  
         const projects = await Project.find();
@@ -111,11 +98,9 @@ io.on('connection', async (socket) => {
     socket.on('updateSite', async ({ name, position, photo, info, list, contact, id }, callback) => {
         try {
             const site = await Site.findByIdAndUpdate(id, { name, position, photo, info, list, contact })
-            const siteText = await SiteText.findByIdAndUpdate(id, { name, position, info, list, contact })
             // const site = new Site({ name, position, photo, info, list, contact });
             await site.save();
-            await siteText.save();
-            socket.emit('result', `Project was successful updated.`);
+            socket.emit('result', { site });
             // callback(channel);
         }catch(e) {
             socket.emit('error', e);
@@ -124,22 +109,11 @@ io.on('connection', async (socket) => {
 
     socket.on('addNewProject', async ({ title, info, media }, callback) => {
         try {
-            // media.forEach((data, i) => {
-            //     const smth = im(data.data).minify(.5);
-            //     console.log(smth);
-                
-            //       if(media.length - 1 === i) {
-            //         // console.log(m)
-                    
-            //     }
-            // });
-            
+            // console.log(title, info, media)
             const project = new Project({ title, info, media });
-            const projectText = new ProjectText({ _id: project._id, title, info });
             await project.save();
-            await projectText.save();
             if(!project) console.log('Pshol nah');
-            socket.emit('result', `Project ${projectText.title} was successful added.`);
+            socket.emit('result', { project });
         }catch(e) {
             socket.emit('error', e);
         }
@@ -149,24 +123,9 @@ io.on('connection', async (socket) => {
         try {
             // console.log(title, info, media)
             const project = await Project.findByIdAndUpdate(id, { title, info, media });
-            const projectText = await ProjectText.findByIdAndUpdate(id, { title, info });
             await project.save();
-            await projectText.save();
             if(!project) console.log('Pshol nah');
-            socket.emit('result', `Project ${projectText.title} was successfuly updated.`);
-        }catch(e) {
-            socket.emit('error', e);
-        }
-    });
-
-    socket.on('deleteProject', async (id) => {
-        try {
-            const project = await Project.findOneAndDelete(id);
-            const projectText = await ProjectText.findOneAndDelete(id);
-            await project.save();
-            await projectText.save();
-            if(!project || !projectText) console.log('Pshol nah');
-            socket.emit('result', `Project ${projectText.title} was successfuly deleted.`);
+            socket.emit('result', { project });
         }catch(e) {
             socket.emit('error', e);
         }
