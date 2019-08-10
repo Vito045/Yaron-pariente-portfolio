@@ -559,7 +559,7 @@ socket.on('start', (site) => {
                 }
             });
         });   
-        if(window.mobilecheck || window.innerWidth <= 800 || window.innerHeight <= 600){
+        if(window.innerWidth <= 800 && window.innerHeight <= 600){
             console.log("mob");
            console.log (document.querySelector('.navigation__icon'));
             document.querySelector('.navigation__icon').addEventListener('click', (e) => {
@@ -630,7 +630,7 @@ const nav = document.querySelector('.navigation__list').children;
                 // console.log(item, key, nav[key])
                 nav[key].addEventListener('click', (e) => {
                     // console.log(e.target.parentElement.id, item);
-                    if(window.mobilecheck || window.innerWidth <= 800 || window.innerHeight <= 600){
+                    if(window.innerWidth <= 800 && window.innerHeight <= 600){
                         console.log("mob");
                         if(e.target.parentElement.id === item.id) {
                             document.querySelector('.navigation__list').style.display = 'none';
