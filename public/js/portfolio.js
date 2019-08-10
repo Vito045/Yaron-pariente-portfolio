@@ -503,6 +503,7 @@ socket.on('start', (site) => {
         const portfolioTemplate = document.querySelector('#portfolioTemplate').innerHTML;
         projects.forEach((project) => {
             let media = [];
+            const id = project._id.toString();
             project.media.forEach((med) => {
                 
                 const bytes = new Uint8Array(med.data.data);
@@ -511,16 +512,17 @@ socket.on('start', (site) => {
                 if(med.type === 'video') media.push(`<video src="data:video/mp4;base64, ${encoded}" width="auto" height="632px" style="object-fit: cover;" autoplay muted></video>`);
                 else if(med.type === 'image') media.push(`<img src="data:image/png;base64, ${encoded}" style="width: auto; height: 632px; objct-fit: cover;">`);
                 // console.log(media);
+                
             });
             // new Swiper (`${project._id.toString()}`, {});
-            const html = Mustache.render(portfolioTemplate, {title: project.title, info: project.info, media, id: project._id  });
+            const html = Mustache.render(portfolioTemplate, {title: project.title, info: project.info, media, id: project._id.toString()  });
             document.querySelector('.portfolio__portfolio').insertAdjacentHTML('beforeend', html);
-        });
-        var mySwiper = new Swiper ('.swiper-container', {
-            navigation: {
-                nextEl: '.portfolio__portfolio-button--right',
-                prevEl: '.portfolio__portfolio-button--left',
-              }
+            new Swiper (`.swiper-container-${id}`, {
+                navigation: {
+                    nextEl: `.portfolio__portfolio-button--right-${id}`,
+                    prevEl: `.portfolio__portfolio-button--left-${id}`
+                  }
+            });
         });
 
         document.querySelector('.portfolio__menu-list').firstElementChild.addEventListener('click', (e) => {
@@ -612,7 +614,7 @@ socket.on('start', (site) => {
 
         document.querySelectorAll('.portfolio__portfolio-plus').forEach((plus) => {
             const height = plus.parentNode.offsetHeight;
-            plus.parentElement.parentElement.style.height = `${height}px`;
+            plus.parentElement.parentElement.style.maxHeight = `${height}px`;
             plus.addEventListener('click', () => {
             plus.parentElement.parentElement.classList.toggle('active');
             for(let i = 0; i < plus.children.length; i++) {

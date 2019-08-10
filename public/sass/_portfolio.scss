@@ -211,7 +211,7 @@
             }
 
             &.active {
-                height: 100% !important;
+                max-height: 1000px !important;
             }
         }
 
@@ -519,3 +519,7 @@
     font-size: 1.4rem;
     padding: .5rem;
 }
+
+// .oneh {
+//     height: 1000%;
+// }

@@ -583,7 +583,7 @@ a:visited {
           grid-template-columns: [full-start] minmax(2rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) [center-end] minmax(2rem, 1fr) [full-end];
           grid-row-gap: 0; } }
       .portfolio__portfolio-item.active {
-        height: 100% !important; }
+        max-height: 1000px !important; }
     .portfolio__portfolio-head {
       grid-column: center-start / center-end;
       display: flex;

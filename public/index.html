@@ -125,7 +125,7 @@ The work was conducted by a product team and developers from Israel/Ukraine/U.S
                         </div>
         </script>
         <script id="portfolioTemplate" type="text/html">
-            <div class="portfolio__portfolio-item" id={{_id}}>
+            <div class="portfolio__portfolio-item" id={{id}}>
                     <div class="portfolio__portfolio-head">
                         <div class="portfolio__portfolio-plus">
                             <div class="portfolio__portfolio-line portfolio__portfolio-line--1"></div>
@@ -137,7 +137,7 @@ The work was conducted by a product team and developers from Israel/Ukraine/U.S
                     <pre class="portfolio__portfolio-text">{{{info}}}</pre>
                     <div class="portfolio__portfolio-slider">
                                 <div class="portfolio__portfolio-wrapper">
-                                        <div class="swiper-container">
+                                        <div class="swiper-container swiper-container-{{id}}">
                                                 <div class="portfolio__portfolio-images swiper-wrapper">
                                                     {{#media}}
                                                         <div class="portfolio__portfolio-image swiper-slide">{{{.}}}</div>
@@ -147,9 +147,9 @@ The work was conducted by a product team and developers from Israel/Ukraine/U.S
                                         
                                 </div>
                                 <div class="portfolio__portfolio-buttons">
-                                        <div class="portfolio__portfolio-button portfolio__portfolio-button--left wiper-button-prev"><i class="fas fa-chevron-left"></i></div>
+                                        <div class="portfolio__portfolio-button portfolio__portfolio-button--left portfolio__portfolio-button--left-{{id}} wiper-button-prev"><i class="fas fa-chevron-left"></i></div>
                                         <div class="portfolio__portfolio-progress-bar"><div class="portfolio__portfolio-progress-bar-elem"></div></div>
-                                        <div class="portfolio__portfolio-button portfolio__portfolio-button--right wiper-button-next"><i class="fas fa-chevron-right"></i></div>
+                                        <div class="portfolio__portfolio-button portfolio__portfolio-button--right portfolio__portfolio-button--right-{{id}} wiper-button-next"><i class="fas fa-chevron-right"></i></div>
                                 </div>
                         </div>
                     </div>
