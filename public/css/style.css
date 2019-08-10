@@ -619,6 +619,9 @@ a:visited {
           padding: 0 2rem;
           margin-top: 1rem;
           padding-top: 1rem; } }
+      @media only screen and (max-width: 50em) {
+        .portfolio__portfolio-text {
+          white-space: pre-wrap; } }
     .portfolio__portfolio-slider {
       grid-column: full-start / full-end;
       background-color: #2f2f2f;
