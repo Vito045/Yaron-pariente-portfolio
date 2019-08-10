@@ -318,10 +318,15 @@
             //     display: block;
             // }
 
-            img {
+            img, video {
                 width: 100%;
                 height: 100%;
                 object-fit: contain;
+
+                @media only screen and (max-width: $bp-small) {
+                    height: 332px !important;
+                    width: 100% !important;
+                }
             }
         }
 
@@ -399,7 +404,7 @@
         position: absolute;
         top: 6rem;
         // right: 12rem;
-        right: -30%;
+        right: -50%;
         display: grid;
         grid-row-gap: 2rem;
         
@@ -424,7 +429,9 @@
             top: 0;
             flex-direction: column;
             align-items: flex-end;
-            right: -30%;
+            right: -50%;
+
+            display: none;
             
         }
 

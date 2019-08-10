@@ -69,15 +69,18 @@ socket.on('admin', (site) => {
                 //  project.addEventListener('submit', )
                 // console.log('gik')
                 project.firstElementChild.addEventListener('click', (e) => {
-                    if(confirm('Are you sure you wat to delite project ' + project.title)) {
-                        socket.emit('deleteProject', id);
-                        project.style.display = 'none';
-                    }
+                    console.log(project);
+                    if(e.target.classList.contains('project__cross'));
+                    console.log(e.target.parentElement.id);
+                    // if(confirm('Are you sure you wat to delite project ' + project.title)) {
+                    //     socket.emit('deleteProject', id);
+                    //     project.style.display = 'none';
+                    // }
                 });
                 project.addEventListener('submit', (e) => {
                     e.preventDefault();
                     const title = e.target.lastElementChild.previousElementSibling.previousElementSibling.previousElementSibling.value;
-                    const info = e.target.firstElementChild.nextElementSibling.nextElementSibling.value;
+                    const info = e.target.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.value;
                     let media = [];
 
                     document.querySelectorAll('.project__media-block-' + id).forEach((block) => {
