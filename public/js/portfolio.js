@@ -508,7 +508,7 @@ socket.on('start', (site) => {
                 const bytes = new Uint8Array(med.data.data);
                 const encoded = encode(bytes);
                 // console.log(med, encoded);
-                if(med.type === 'video') media.push(`<video src="data:video/mp4;base64, ${encoded}" width="auto" height="632px" style="object-fit: cover;" autoplay controls></video>`);
+                if(med.type === 'video') media.push(`<video src="data:video/mp4;base64, ${encoded}" width="auto" height="632px" style="object-fit: cover;" autoplay muted></video>`);
                 else if(med.type === 'image') media.push(`<img src="data:image/png;base64, ${encoded}" style="width: auto; height: 632px; objct-fit: cover;">`);
                 // console.log(media);
             });
