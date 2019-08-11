@@ -92,7 +92,7 @@ io.on('connection', async (socket) => {
         // socket.emit('start', { site: currentState });  
         const currentState = await Site.findOne().sort({created_at: -1}); 
         socket.emit('start', { site: currentState });  
-        const projects = await Project.find();
+        const projects = await Project.find().sort({created_at: 1});
         socket.emit('projects', projects );
     });
 

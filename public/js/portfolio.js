@@ -509,8 +509,8 @@ socket.on('start', (site) => {
                 const bytes = new Uint8Array(med.data.data);
                 const encoded = encode(bytes);
                 // console.log(med, encoded);
-                if(med.type === 'video') media.push(`<video src="data:video/mp4;base64, ${encoded}" width="auto" height="632px" style="object-fit: cover;" autoplay muted></video>`);
-                else if(med.type === 'image') media.push(`<img src="data:image/png;base64, ${encoded}" style="width: auto; height: 632px; objct-fit: cover;">`);
+                if(med.type === 'video') media.push(`<video src="data:video/mp4;base64, ${encoded}" autoplay muted></video>`);
+                else if(med.type === 'image') media.push(`<img src="data:image/png;base64, ${encoded}">`);
                 // console.log(media);
                 
             });
@@ -624,6 +624,12 @@ socket.on('start', (site) => {
             }
     });
     
+});
+
+document.querySelectorAll('.portfolio__portfolio-head').forEach((head) => {
+    head.addEventListener('click', (e) => {
+        head.firstElementChild.click();
+    });
 });
 
 const nav = document.querySelector('.navigation__list').children;
