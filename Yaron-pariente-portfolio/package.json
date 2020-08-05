@@ -19,7 +19,7 @@
   "author": "Jonas",
   "license": "ISC",
   "dependencies": {
-    "express-fileupload": "^1.1.5",
+    "express-fileupload": "^1.1.9",
     "socketio-file-upload": "^0.7.0",
     "utf8": "^3.0.0",
     "autoprefixer": "^7.1.4",
