@@ -36,7 +36,7 @@
     "validator": "^10.11.0",
     "bcryptjs": "^2.4.3",
     "env-cmd": "^8.0.2",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "file-system": "^2.2.2",
     "hbs": "^4.0.3",
     "jsonwebtoken": "^8.5.1"
